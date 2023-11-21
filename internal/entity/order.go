@@ -8,5 +8,5 @@ type Order struct {
 }
 
 func (o *Order) CalculateFinalPrice() {
-    o.FinalPrice = o.Price + o.Tax
+	o.FinalPrice = o.Price + o.Tax
 }
