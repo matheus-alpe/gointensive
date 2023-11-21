@@ -1,18 +1,34 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
+	"time"
 
-	"github.com/matheus-alpe/gointensive/internal/entity"
+	"github.com/matheus-alpe/gointensive/internal/infra/database"
+	"github.com/matheus-alpe/gointensive/internal/usecase"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
-    order := entity.Order{
-        Id: "123",
-        Price: 59.95,
-        Tax: 5.0,
-    }
+	db, err := sql.Open("sqlite3", "db.sqlite3")
+	if err != nil {
+		panic(err)
+	}
 
-    order.CalculateFinalPrice()
-    fmt.Println(order.FinalPrice)
+	uc := usecase.NewCalculateFinalPrice(database.NewOrderRepository(db))
+
+	input := usecase.OrderInput{
+		Id: fmt.Sprintf("%v", time.Now()),
+		Price: 10.0,
+		Tax: 5.0,
+	}
+
+	output, err := uc.Execute(input)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(output)
+	fmt.Println(uc.OrderRepository.GetTotalTransactions())
 }
