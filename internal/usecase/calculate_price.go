@@ -3,10 +3,12 @@ package usecase
 import "github.com/matheus-alpe/gointensive/internal/entity"
 
 type OrderInput struct {
-	Id    string
-	Price float64
-	Tax   float64
+	Id    string  `json:"id"`
+	Price float64 `json:"price"`
+	Tax   float64 `json:"tax"`
 }
+
+// {"id": "1", "price": 10.0, "tax": 0.5}
 
 type OrderOutput struct {
 	Id         string
