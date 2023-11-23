@@ -1,6 +1,10 @@
 version: '3'
 
 services:
+  rest-api:
+    image: matheusalpe/gointensive-api:latest
+    ports:
+      - "8888:8888"
   rabbitmq:
     image: rabbitmq:3-management
     ports:
